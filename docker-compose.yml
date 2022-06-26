@@ -1,0 +1,25 @@
+version: "3.7"
+
+networks: 
+  devops:
+    driver: bridge
+
+services:
+  mysql:
+    image: mysql:5.7.22
+    container_name: db_customer
+    restart: unless-stopped
+    environment: 
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes: 
+      - ./volumes/mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks: 
+      - devops
+      
